@@ -1,0 +1,24 @@
+**CRIANDO DELETE...
+
+no ClientService.java:
+
+public void deleteClient(Integer id) {
+         clientRepository.deleteById(id);
+         listClient();
+        
+    } 
+
+
+
+
+no ClientController.java:
+
+@DeleteMapping(value = "/{id}")
+	public ResponseEntity<List<ClientResponse>> delete(@PathVariable Integer id) {
+
+		clientService.deleteClient(id);
+
+		return ResponseEntity.ok(clientService.listClient().stream() //
+				.map(x -> mapper.toDto(x)) //
+				.collect(Collectors.toList()));
+	}
